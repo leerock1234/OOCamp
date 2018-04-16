@@ -11,7 +11,7 @@ public class SuperParkingBoyTest {
 		Park park1 = new Park(10);
 		parkCar(park1);
 		Park park2 = new Park(20);
-		ParkingBoy SuperParkingBoy = new ParkingBoy(new SuperParkingBoyStrategy(), park1, park2);
+		ParkingBoy SuperParkingBoy = ParkingBoy.createSuperParkingBoy(park1, park2);
 
 		SuperParkingBoy.park(new Car());
 
@@ -24,7 +24,7 @@ public class SuperParkingBoyTest {
 		Park park1 = new Park(10);
 		Park park2 = new Park(20);
 		parkCar(park2);
-		ParkingBoy superParkingBoy = new ParkingBoy(new SuperParkingBoyStrategy(), park1, park2);
+		ParkingBoy superParkingBoy = ParkingBoy.createSuperParkingBoy(park1, park2);
 		
 		superParkingBoy.park(new Car());
 

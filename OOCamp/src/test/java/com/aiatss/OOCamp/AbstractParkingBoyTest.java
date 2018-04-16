@@ -21,7 +21,7 @@ public class AbstractParkingBoyTest {
 
 	@Parameterized.Parameters
 	public static Collection primeNumbers() {
-		return Arrays.asList(new Object[] { "ParkingBoy", "SmartParkingBoy", "SuperParkingBoy" });
+		return Arrays.asList(new Object[] { "ParkingBoy", "SmartParkingBoy", "SuperParkingBoy", "ParkingManager" });
 	}
 
 	@Test
@@ -33,13 +33,18 @@ public class AbstractParkingBoyTest {
 	
 	private ParkingBoy createParkingBoy(Park park1, Park park2) {
 		if (className.equals("ParkingBoy")) {
-			return new ParkingBoy(new ParkingBoyStrategy(), park1, park2);
+			return ParkingBoy.createParkingBoy(park1, park2);
 		}
 		if (className.equals("SmartParkingBoy")) {
-			return new ParkingBoy(new SmartParkingBoyStrategy(), park1, park2);
+			return ParkingBoy.createSmartParkingBoy(park1, park2);
 		}
 		if (className.equals("SuperParkingBoy")) {
-			return new ParkingBoy(new SuperParkingBoyStrategy(), park1, park2);
+			return ParkingBoy.createSuperParkingBoy(park1, park2);
+		}
+		if (className.equals("ParkingManager")) {
+			ParkingBoy boy1 = ParkingBoy.createParkingBoy(park1);
+			ParkingBoy boy2 = ParkingBoy.createParkingBoy(park2);
+			return ParkingBoy.createParkingManager(boy1, boy2);
 		}
 		return null;
 	}
