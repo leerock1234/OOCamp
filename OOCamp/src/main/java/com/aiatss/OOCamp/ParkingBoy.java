@@ -1,15 +1,34 @@
 package com.aiatss.OOCamp;
 
-public class ParkingBoy extends AbstractParkingBoy{
-	
-	public ParkingBoy(Park park1, Park park2) {
-		super(park1, park2);
+import java.util.Arrays;
+import java.util.List;
+
+public class ParkingBoy {
+	List<Park> parks;
+	ChooseParkStrategy chooseParkStrategy;
+
+	public ParkingBoy(ChooseParkStrategy chooseParkStrategy, Park ... parks) {
+		this.chooseParkStrategy = chooseParkStrategy;
+		this.parks = Arrays.asList(parks);
 	}
 
-	@Override
-	protected Park getLastAvailablePark() {
+	public Token park(Car car) {
+		Park availablePark = choosePark();
+		return availablePark.parkOneCar(car);
+	}
+
+	Park choosePark() {
+		return chooseParkStrategy.choosePark(parks);
+	}
+
+	public Car pick(Token token) {
+		Park parkWhereCarIsIn = searchParkByToken(token);
+		return parkWhereCarIsIn.getOneCar(token);
+	}
+
+	private Park searchParkByToken(Token token) {
 		for(Park park : parks) {
-			if (park.isAvailable()) {
+			if (park.hasCar(token)) {
 				return park;
 			}
 		}

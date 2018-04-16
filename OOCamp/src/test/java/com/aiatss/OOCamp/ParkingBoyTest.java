@@ -10,7 +10,7 @@ public class ParkingBoyTest {
 	public void should_be_able_to_park_to_the_first_park_when_it_is_not_full() {
 		Park park1 = new Park(1);
 		Park park2 = new Park(2);
-		ParkingBoy parkingBoy = new ParkingBoy(park1, park2);
+		ParkingBoy parkingBoy = new ParkingBoy(new ParkingBoyStrategy(), park1, park2);
 
 		parkingBoy.park(new Car());
 
@@ -21,7 +21,7 @@ public class ParkingBoyTest {
 	public void should_be_able_to_park_to_the_second_park_when_the_first_is_full() {
 		Park park1 = new Park(1);
 		Park park2 = new Park(2);
-		ParkingBoy parkingBoy = new ParkingBoy(park1, park2);
+		ParkingBoy parkingBoy = new ParkingBoy(new ParkingBoyStrategy(), park1, park2);
 		parkingBoy.park(new Car());
 		
 		parkingBoy.park(new Car());

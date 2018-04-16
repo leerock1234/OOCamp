@@ -31,22 +31,22 @@ public class AbstractParkingBoyTest {
 		createParkingBoy(park1, park2);
 	}
 	
-	private AbstractParkingBoy createParkingBoy(Park park1, Park park2) {
+	private ParkingBoy createParkingBoy(Park park1, Park park2) {
 		if (className.equals("ParkingBoy")) {
-			return new ParkingBoy(park1, park2);
+			return new ParkingBoy(new ParkingBoyStrategy(), park1, park2);
 		}
 		if (className.equals("SmartParkingBoy")) {
-			return new SmartParkingBoy(park1, park2);
+			return new ParkingBoy(new SmartParkingBoyStrategy(), park1, park2);
 		}
 		if (className.equals("SuperParkingBoy")) {
-			return new SuperParkingBoy(park1, park2);
+			return new ParkingBoy(new SuperParkingBoyStrategy(), park1, park2);
 		}
 		return null;
 	}
 
 	@Test(expected = NoParkLotException.class)
 	public void should_fail_when_there_is_no_available_parking_lot() {
-		AbstractParkingBoy parkingBoy = employParkingBoyWithTwoParks();
+		ParkingBoy parkingBoy = employParkingBoyWithTwoParks();
 		parkingBoy.park(new Car());
 		parkingBoy.park(new Car());
 		parkingBoy.park(new Car());
@@ -56,7 +56,7 @@ public class AbstractParkingBoyTest {
 
 	@Test
 	public void should_be_able_to_get_car_in_the_first_parking_lot() {
-		AbstractParkingBoy parkingBoy = employParkingBoyWithTwoParks();
+		ParkingBoy parkingBoy = employParkingBoyWithTwoParks();
 		Car car = new Car();
 		Token token = parkingBoy.park(car);
 		parkingBoy.park(new Car());
@@ -68,7 +68,7 @@ public class AbstractParkingBoyTest {
 
 	@Test
 	public void should_be_able_to_get_car_in_the_second_parking_lot() {
-		AbstractParkingBoy parkingBoy = employParkingBoyWithTwoParks();
+		ParkingBoy parkingBoy = employParkingBoyWithTwoParks();
 		parkingBoy.park(new Car());
 		Car car = new Car();
 		Token token = parkingBoy.park(car);
@@ -80,7 +80,7 @@ public class AbstractParkingBoyTest {
 
 	@Test(expected = NoCarFoundException.class)
 	public void should_fail_to_get_an_non_existed_car() {
-		AbstractParkingBoy parkingBoy = employParkingBoyWithTwoParks();
+		ParkingBoy parkingBoy = employParkingBoyWithTwoParks();
 		Car car = new Car();
 		Token token = parkingBoy.park(car);
 		parkingBoy.pick(token);
@@ -92,7 +92,7 @@ public class AbstractParkingBoyTest {
 	public void should_reuse_parking_lot() {
 		Park park1 = new Park(1);
 		Park park2 = new Park(2);
-		AbstractParkingBoy parkingBoy = createParkingBoy(park1, park2);
+		ParkingBoy parkingBoy = createParkingBoy(park1, park2);
 		Car car = new Car();
 		Token token = parkingBoy.park(car);
 		parkingBoy.park(new Car());
@@ -103,10 +103,10 @@ public class AbstractParkingBoyTest {
 		assertEquals(1, park2.getAvailableParkingLot());
 	}
 
-	private AbstractParkingBoy employParkingBoyWithTwoParks() {
+	private ParkingBoy employParkingBoyWithTwoParks() {
 		Park park1 = new Park(1);
 		Park park2 = new Park(2);
-		AbstractParkingBoy parkingBoy = createParkingBoy(park1, park2);
+		ParkingBoy parkingBoy = createParkingBoy(park1, park2);
 		return parkingBoy;
 	}
 
